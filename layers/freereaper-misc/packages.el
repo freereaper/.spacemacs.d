@@ -1,8 +1,19 @@
 (setq freereaper-misc-packages '(
-                                     helm-ag
-                                     projectile
-                                     )
-  )
+                                 projectile
+                                 helm-ag
+                                 helm-github-stars
+                                 gist
+                                 ranger
+                                 golden-ratio
+                                 ))
+
+(defun freereaper-misc/post-init-golden-ratio ()
+  (with-eval-after-load 'golden-ratio
+    (dolist (mode '("dired-mode" "occur-mode"))
+      (add-to-list 'golden-ratio-exclude-modes mode))
+    (dolist (n '("COMMIT_EDITMSG"))
+      (add-to-list 'golden-ratio-exclude-buffer-names n))))
+
 
 (defun freereaper-misc/init-helm-ag ()
   (use-package helm-ag
@@ -333,3 +344,44 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
         (occur my-simple-todo-regex)))
     (spacemacs/set-leader-keys "pf" 'freereaper/open-file-with-projectile-or-counsel-git)
     (spacemacs/set-leader-keys "pt" 'my-simple-todo)))
+
+(defun freereaper-misc/init-helm-github-stars ()
+  (use-package helm-github-stars
+    :commands (helm-github-stars)
+    :init
+    (setq helm-github-stars-username "freereaper")))
+
+(defun freereaper-misc/post-init-gist ()
+  (use-package gist
+    :defer t
+    :init
+    (setq gist-list-format
+          '((files "File" 30 nil "%s")
+            (id "Id" 10 nil identity)
+            (created "Created" 20 nil "%D %R")
+            (visibility "Visibility" 10 nil
+                        (lambda
+                          (public)
+                          (or
+                           (and public "public")
+                           "private")))
+            (description "Description" 0 nil identity)))
+    :config
+    (progn
+      (spacemacs|define-transient-state gist-list-mode
+        :title "Gist-mode Transient State"
+        :bindings
+        ("k" gist-kill-current "delete gist")
+        ("e" gist-edit-current-description "edit gist title")
+        ("+" gist-add-buffer "add a file")
+        ("-" gist-remove-file "delete a file")
+        ("y" gist-print-current-url "print url")
+        ("b" gist-browse-current-url "browse gist in browser")
+        ("*" gist-star "star gist")
+        ("^" gist-unstar "unstar gist")
+        ("f" gist-fork "fork gist")
+        ("q" nil "quit" :exit t)
+        ("<escape>" nil nil :exit t))
+      (spacemacs/set-leader-keys-for-major-mode 'gist-list-mode
+        "." 'spacemacs/gist-list-mode-transient-state/body))
+    ))
