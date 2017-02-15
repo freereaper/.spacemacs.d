@@ -349,7 +349,7 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
   (use-package helm-github-stars
     :commands (helm-github-stars)
     :init
-    (setq helm-github-stars-username "freereaper")))
+    (setq helm-github-stars-username "zilongshanren")))
 
 (defun freereaper-misc/post-init-gist ()
   (use-package gist
