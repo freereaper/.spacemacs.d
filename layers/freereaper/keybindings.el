@@ -8,7 +8,4 @@
 (global-set-key (kbd "<f1>") 'freereaper/helm-hotspots)
 (spacemacs/set-leader-keys "oo" 'freereaper/helm-hotspots)
 
-
-(bind-keys :prefix-map  my-prefix-map
-           :prefix "C-c c"
-           ("v". customize-face))
+(spacemacs/set-leader-keys "rh" 'helm-resume)

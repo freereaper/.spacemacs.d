@@ -91,7 +91,7 @@ This functions should be added to the hooks of major modes for programming."
     (when (or FORCE (not (file-exists-p file)))
       (message "Creating TAGS in %s ..." dir)
       (shell-command
-       (format "ctags -f %s -e -R %s" file dir)))
+       (format "/usr/bin/ctags -f %s -e -R %s" file dir)))
     file))
 
 (defun my-update-tags ()
