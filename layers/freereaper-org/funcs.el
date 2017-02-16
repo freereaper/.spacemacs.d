@@ -41,6 +41,18 @@
     (previous-line 2)
     (org-edit-src-code)))
 
+(defun freereaper//insert-org-or-md-img-link (prefix imagename)
+  (if (equal (file-name-extension (buffer-file-name)) "org")
+      (insert (format "[[%s%s]]" prefix imagename))
+    (insert (format "![%s](%s%s)" imagename prefix imagename))))
+
+
+(defun freereaper/org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)    ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+
 (defun freereaper/org-save-and-export ()
   (interactive)
   (org-octopress-setup-publish-project)

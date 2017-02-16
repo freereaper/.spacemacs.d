@@ -3,6 +3,7 @@
     ;; spaceline
     diminish
     popwin
+    (whitespace :location built-in)
     )
   )
 

@@ -1,4 +1,6 @@
 (setq freereaper-misc-packages '(
+                                 prodigy
+                                 find-file-in-project
                                  projectile
                                  helm-ag
                                  helm-github-stars
@@ -6,6 +8,38 @@
                                  ranger
                                  golden-ratio
                                  ))
+
+(defun freereaper-misc/init-find-file-in-project ()
+  (use-package find-file-in-project
+    :defer t
+    :config
+    (progn
+      ;; If you use other VCS (subversion, for example), enable the following option
+      ;;(setq ffip-project-file ".svn")
+      ;; in MacOS X, the search file command is CMD+p
+      ;; for this project, I'm only interested certain types of files
+      (setq-default ffip-patterns '("*.html" "*.js" "*.css" "*.java" "*.xml" "*.cpp" "*.h" "*.c" "*.mm" "*.m" "*.el"))
+      ;; if the full path of current file is under SUBPROJECT1 or SUBPROJECT2
+      ;; OR if I'm reading my personal issue track document,
+      (defadvice find-file-in-project (before my-find-file-in-project activate compile)
+        (when (ffip-current-full-filename-match-pattern-p "\\(/fireball\\)")
+          ;; set the root directory into "~/projs/PROJECT_DIR"
+          (setq-local ffip-project-root "~/Github/fireball")
+          ;; well, I'm not interested in concatenated BIG js file or file in dist/
+          (setq-local ffip-find-options "-not -size +64k -not -iwholename '*/bin/*'")
+          ;; do NOT search files in below directories, the default value is better.
+          (dolist (item '("*/docs/html/*" "*.meta" "*/cocos2d-x/*" "*.asset" "*/visual-tests/res/*"))
+            (push item  ffip-prune-patterns)))
+        (when (ffip-current-full-filename-match-pattern-p "\\(/cocos2d-x\\)")
+          ;; set the root directory into "~/projs/PROJECT_DIR"
+          (setq-local ffip-project-root "~/cocos2d-x")
+          ;; well, I'm not interested in concatenated BIG js file or file in dist/
+          (setq-local ffip-find-options "-not -size +64k -not -iwholename '*/bin/*'")
+          ;; do NOT search files in below directories, the default value is better.
+          ;; (setq-default ffip-prune-patterns '(".git" ".hg" "*.svn" "node_modules" "bower_components" "obj"))
+          ))
+      (ad-activate 'find-file-in-project))))
+
 
 (defun freereaper-misc/post-init-golden-ratio ()
   (with-eval-after-load 'golden-ratio
@@ -385,3 +419,14 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
       (spacemacs/set-leader-keys-for-major-mode 'gist-list-mode
         "." 'spacemacs/gist-list-mode-transient-state/body))
     ))
+
+(defun freereaper-misc/post-init-prodigy ()
+  (progn
+    (prodigy-define-service
+      :name "Org wiki preview"
+      :command "python"
+      :args '("-m" "SimpleHTTPServer" "8088")
+      :cwd "~/org-notes/public_html"
+      :tags '(org-mode)
+      :kill-signal 'sigkill
+      :kill-process-buffer-on-stop t)))

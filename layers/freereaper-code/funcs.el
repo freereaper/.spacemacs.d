@@ -81,4 +81,40 @@ This functions should be added to the hooks of major modes for programming."
      ("\\<\\(DONE\\):" 1 'org-done t))
    ))
 
-(add-hook 'prog-mode-hook 'font-lock-comment-annotations)
+(defun my-create-tags-if-needed (SRC-DIR &optional FORCE)
+  "return the full path of tags file"
+  (let ((dir (file-name-as-directory (file-truename SRC-DIR)))
+        file)
+    (setq file (concat dir "TAGS"))
+    (when (spacemacs/system-is-mswindows)
+      (setq dir (substring dir 0 -1)))
+    (when (or FORCE (not (file-exists-p file)))
+      (message "Creating TAGS in %s ..." dir)
+      (shell-command
+       (format "ctags -f %s -e -R %s" file dir)))
+    file))
+
+(defun my-update-tags ()
+  (interactive)
+  "check the tags in tags-table-list and re-create it"
+  (dolist (tag tags-table-list)
+    (my-create-tags-if-needed (file-name-directory tag) t)))
+
+
+(defun my-project-name-contains-substring (REGEX)
+  (let ((dir (if (buffer-file-name)
+                 (file-name-directory (buffer-file-name))
+               "")))
+    (string-match-p REGEX dir)))
+
+(defun freereaper/setup-coding-env ()
+  (interactive)
+  (when (my-project-name-contains-substring "guanghui")
+    (cond
+     ((my-project-name-contains-substring "cocos2d-x")
+      ;; C++ project don't need html tags
+      (setq tags-table-list (list (my-create-tags-if-needed "~/cocos2d-x/cocos"))))
+     ((my-project-name-contains-substring "Github/fireball")
+      (message "load tags for fireball engine repo...")
+      ;; html project donot need C++ tags
+      (setq tags-table-list (list (my-create-tags-if-needed "~/Github/fireball/engine/cocos2d")))))))

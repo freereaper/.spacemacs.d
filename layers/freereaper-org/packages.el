@@ -82,7 +82,10 @@
                                   ;; keybinding for editing source code blocks
                                   ;; keybinding for inserting code blocks
                                   (local-set-key (kbd "C-c i s")
-                                                 'zilongshanren/org-insert-src-block)))
+                                                 'freereaper/org-insert-src-block)))
+
+      (add-hook 'org-mode-hook 'spacemacs/toggle-whitespace-cleanup-off)
+
       (require 'ox-publish)
       (add-to-list 'org-latex-classes '("ctexart" "\\documentclass[11pt]{ctexart}
                                         [NO-DEFAULT-PACKAGES]
@@ -146,7 +149,8 @@
 
       (setq org-latex-listings t)
 
-      ;;reset subtask
+      ;;reset subtas
+      ;;k
       (setq org-default-properties (cons "RESET_SUBTASKS" org-default-properties))
 
       ;; (add-hook 'org-after-todo-state-change-hook 'org-subtask-reset)
@@ -244,14 +248,14 @@ unwanted space when exporting org-mode to html."
                 (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
                 ))))
 
-      (defvar zilongshanren-website-html-preamble
+      (defvar freereaper-website-html-preamble
         "<div class='nav'>
 <ul>
-<li><a href='http://zilongshanren.com'>博客</a></li>
+<li><a href='http://freereaper.com'>博客</a></li>
 <li><a href='/index.html'>Wiki目录</a></li>
 </ul>
 </div>")
-      (defvar zilongshanren-website-html-blog-head
+      (defvar freereaper-website-html-blog-head
         " <link rel='stylesheet' href='css/site.css' type='text/css'/> \n
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/worg.css\"/>")
       (setq org-publish-project-alist
@@ -262,16 +266,16 @@ unwanted space when exporting org-mode to html."
                :publishing-directory "~/org-notes/public_html/"
 
                :recursive t
-               :html-head , zilongshanren-website-html-blog-head
+               :html-head , freereaper-website-html-blog-head
                :publishing-function org-html-publish-to-html
                :headline-levels 4       ; Just the default for this project.
                :auto-preamble t
                :exclude "gtd.org"
                :exclude-tags ("ol" "noexport")
                :section-numbers nil
-               :html-preamble ,zilongshanren-website-html-preamble
-               :author "zilongshanren"
-               :email "guanghui8827@gmail.com"
+               :html-preamble ,freereaper-website-html-preamble
+               :author "freereaper"
+               :email "freereaper@aliyun.com"
                :auto-sitemap t          ; Generate sitemap.org automagically...
                :sitemap-filename "index.org" ; ... call it sitemap.org (it's the default)...
                :sitemap-title "我的wiki"     ; ... with title 'Sitemap'.
@@ -289,7 +293,7 @@ unwanted space when exporting org-mode to html."
 
 
 
-      (add-hook 'org-after-todo-statistics-hook 'zilong/org-summary-todo)
+      (add-hook 'org-after-todo-statistics-hook 'freereaper/org-summary-todo)
       ;; used by zilong/org-clock-sum-today-by-tags
 
       (define-key org-mode-map (kbd "s-p") 'org-priority)
@@ -393,11 +397,11 @@ holding contextual information."
       (add-hook 'org-octopress-summary-mode-hook
                 #'(lambda () (local-set-key (kbd "q") 'bury-buffer)))
       (setq org-blog-dir blog-admin-dir)
-      (setq org-octopress-directory-top org-blog-dir)
-      (setq org-octopress-directory-posts (concat org-blog-dir "source/_posts"))
-      (setq org-octopress-directory-org-top org-blog-dir)
-      (setq org-octopress-directory-org-posts (expand-file-name  "blog" blog-admin-dir))
-      (setq org-octopress-setup-file (concat org-blog-dir "setupfile.org"))
+      (setq org-octopress-directory-top "/home/reaper/4gamers.cn/source")
+      (setq org-octopress-directory-posts "/home/reaper/4gamers.cn/source/_posts")
+      (setq org-octopress-directory-org-top "/home/reaper/4gamers.cn/source")
+      (setq org-octopress-directory-org-posts "/home/reaper/4gamers.cn/org/source" )
+      (setq org-octopress-setup-file "/home/reaper/4gamers.cn/org/setupfile.org")
 
       )))
 

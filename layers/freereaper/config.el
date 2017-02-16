@@ -1,16 +1,3 @@
-(defvar org-agenda-dir ""
-  "gtd files")
-
-(defvar deft-dir ""
-  "deft org files locaiton")
-
-(defvar blog-admin-dir ""
-  "blog-admin files location")
-
-(setq-default
- org-agenda-dir "~/org-notes"
- deft-dir "~/org-notes"
- blog-admin-dir "~/4gamers.cn")
 
 (setq *is-a-mac* (eq system-type 'darwin))
 (setq *cygwin* (eq system-type 'cygwin) )

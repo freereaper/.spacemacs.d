@@ -105,3 +105,8 @@ org-files and bookmarks"
   (interactive)
   (goto-char (point-min))
   (while (search-forward "\r" nil t) (replace-match "")))
+
+(defun freereaper/counsel-imenu ()
+  (interactive)
+  (counsel-imenu)
+  (evil-set-jump))
