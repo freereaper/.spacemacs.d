@@ -1,6 +1,6 @@
 (setq freereaper-misc-packages '(
                                  prodigy
-                                 find-file-in-project
+                                 (find-file-in-project :location local)
                                  projectile
                                  helm-ag
                                  helm-github-stars
@@ -13,6 +13,7 @@
 
 (defun freereaper-misc/init-find-file-in-project ()
   (use-package find-file-in-project
+    :commands (find-file-in-project ffip-get-project-root-directory)
     :defer t
     :config
     (progn
