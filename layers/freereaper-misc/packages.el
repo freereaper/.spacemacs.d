@@ -368,6 +368,13 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
         (kbd "gr") 'helm-ag--update-save-results
         (kbd "q") 'quit-window))))
 
+(defun freereaper-misc/post-init-helm-ag ()
+  (progn
+    (defadvice helm-ag--find-file-action (after helm-ag--find-file-action-after activate)
+      (recenter)
+      )
+    ))
+
 (defun freereaper-misc/post-init-projectile ()
   (progn
     (with-eval-after-load 'projectile
