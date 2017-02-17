@@ -5,8 +5,10 @@
                                  helm-ag
                                  helm-github-stars
                                  gist
+                                 swiper
                                  ranger
                                  golden-ratio
+                                 persp-mode
                                  ))
 
 (defun freereaper-misc/init-find-file-in-project ()
@@ -48,6 +50,17 @@
     (dolist (n '("COMMIT_EDITMSG"))
       (add-to-list 'golden-ratio-exclude-buffer-names n))))
 
+
+(defun freereaper-misc/post-init-persp-mode ()
+  (setq persp-kill-foreign-buffer-action 'kill)
+  (setq persp-lighter nil)
+  (when (fboundp 'spacemacs|define-custom-layout)
+    (spacemacs|define-custom-layout "@ZX2100"
+      :binding "c"
+      :body
+      (find-file "~/ws/p4ws/reaper_code/sw/s3gdrv/Source_New/LinuxDST/new_kernel/core/dispmgr/cbios_interface.c")
+      (split-window-right)
+      (find-file "~/ws/p4ws/reaper_code/sw/s3gdrv/Source_New/LinuxDST/new_kernel/core/dispmgr/dispmgr.c"))))
 
 (defun freereaper-misc/init-helm-ag ()
   (use-package helm-ag
@@ -351,7 +364,7 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
         "stP" 'spacemacs/helm-project-do-pt-region-or-symbol))
     :config
     (progn
-      (advice-add 'helm-ag--save-results :after 'spacemacs//gne-init-helm-ag)
+      ;; (advice-add 'helm-ag--save-results :after 'spacemacs//gne-init-helm-ag)
       (evil-define-key 'normal helm-ag-map "SPC" spacemacs-default-map)
       (evilified-state-evilify helm-ag-mode helm-ag-mode-map
         (kbd "RET") 'helm-ag-mode-jump-other-window
@@ -419,6 +432,51 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
       (spacemacs/set-leader-keys-for-major-mode 'gist-list-mode
         "." 'spacemacs/gist-list-mode-transient-state/body))
     ))
+
+(defun freereaper-misc/post-init-swiper ()
+  "Initialize my package"
+  (progn
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy)
+
+
+    (evilified-state-evilify ivy-occur-mode ivy-occur-mode-map)
+
+    (use-package ivy
+      :defer t
+      :config
+      (progn
+        (spacemacs|hide-lighter ivy-mode)
+
+        (ivy-set-actions
+         t
+         '(("f" my-find-file-in-git-repo "find files")
+           ("!" my-open-file-in-external-app "Open file in external app")
+           ("I" ivy-insert-action "insert")))
+
+        (spacemacs/set-leader-keys "fad" 'counsel-goto-recent-directory)
+        (spacemacs/set-leader-keys "faf" 'counsel-find-file-recent-directory)
+
+        (setq ivy-initial-inputs-alist nil)
+        (setq ivy-wrap t)
+        (setq confirm-nonexistent-file-or-buffer t)
+
+        ;; (when (not (configuration-layer/layer-usedp 'helm))
+        ;;   (spacemacs/set-leader-keys "sp" 'counsel-git-grep)
+        ;;   (spacemacs/set-leader-keys "sP" 'spacemacs/counsel-git-grep-region-or-symbol))
+        (define-key ivy-minibuffer-map (kbd "C-c o") 'ivy-occur)
+        (define-key ivy-minibuffer-map (kbd "TAB") 'ivy-call)
+        (define-key ivy-minibuffer-map (kbd "C-s-m") 'ivy-partial-or-done)
+        (define-key ivy-minibuffer-map (kbd "C-c s") 'ivy-ff-checksum)
+        (define-key ivy-minibuffer-map (kbd "s-o") 'ivy-dispatching-done)
+        (define-key ivy-minibuffer-map (kbd "C-c C-e") 'spacemacs//counsel-edit)
+        (define-key ivy-minibuffer-map (kbd "<f3>") 'ivy-occur)
+        (define-key ivy-minibuffer-map (kbd "C-s-j") 'ivy-immediate-done)
+        (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
+        (define-key ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)))
+
+    (define-key global-map (kbd "C-s") 'freereaper/my-swiper-search)))
+
 
 (defun freereaper-misc/post-init-prodigy ()
   (progn

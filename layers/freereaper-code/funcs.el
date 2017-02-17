@@ -118,3 +118,12 @@ This functions should be added to the hooks of major modes for programming."
       (message "load tags for fireball engine repo...")
       ;; html project donot need C++ tags
       (setq tags-table-list (list (my-create-tags-if-needed "~/Github/fireball/engine/cocos2d")))))))
+
+
+(defun freereaper/load-my-layout ()
+  (interactive)
+  (persp-load-state-from-file (concat persp-save-dir "freereaper")))
+
+(defun freereaper/save-my-layout ()
+  (interactive)
+  (persp-save-state-to-file (concat persp-save-dir "freereaper")))
