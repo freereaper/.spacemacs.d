@@ -240,7 +240,7 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
       (defun spacemacs/helm-project-do-ag ()
         "Search in current project with `ag'."
         (interactive)
-        (let ((dir (projectile-project-root)))
+        (let ((dir (ffip-get-project-root-directory)))
           (if dir
               (helm-do-ag dir)
             (message "error: Not in a project."))))
@@ -248,7 +248,7 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
       (defun spacemacs/helm-project-do-ag-region-or-symbol ()
         "Search in current project with `ag' using a default input."
         (interactive)
-        (let ((dir (projectile-project-root)))
+        (let ((dir (ffip-get-project-root-directory)))
           (if dir
               (spacemacs//helm-do-ag-region-or-symbol 'helm-do-ag dir)
             (message "error: Not in a project."))))
@@ -352,12 +352,8 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
         "stf" 'spacemacs/helm-files-do-pt
         "stF" 'spacemacs/helm-files-do-pt-region-or-symbol
         ;; current project scope
-        "/"   'spacemacs/helm-project-smart-do-search
-        "*"   'spacemacs/helm-project-smart-do-search-region-or-symbol
-        "sp"  'spacemacs/helm-project-smart-do-search
-        "sP"  'spacemacs/helm-project-smart-do-search-region-or-symbol
-        "sap" 'spacemacs/helm-project-do-ag
-        "saP" 'spacemacs/helm-project-do-ag-region-or-symbol
+        "/"   'spacemacs/helm-project-do-ag
+        "*"   'spacemacs/helm-project-do-ag-region-or-symbol
         "skp" 'spacemacs/helm-project-do-ack
         "skP" 'spacemacs/helm-project-do-ack-region-or-symbol
         "stp" 'spacemacs/helm-project-do-pt

@@ -19,5 +19,4 @@
 
 (spacemacs/set-leader-keys "rh" 'helm-resume)
 
-
 (spacemacs/set-leader-keys "nl" 'spacemacs/evil-search-clear-highlight)
