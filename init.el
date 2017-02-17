@@ -317,10 +317,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
   ;; set proxy for emacs
+  ;; (setq url-proxy-services
+  ;;         '(("no_proxy" . "^\\(localhost\\)")
+  ;;           ("http" . "10.30.24.3:985")
+  ;;           ("https" . "10.30.24.3:985")))
+
   (setq url-proxy-services
-          '(("no_proxy" . "^\\(localhost\\)")
-            ("http" . "10.30.24.3:985")
-            ("https" . "10.30.24.3:985")))
+           '(("no_proxy" . "^\\(localhost\\)")
+             ("http" . "192.168.0.105:1080")
+             ("https" . "192.168.0.105:1080")))
+
 
   ;; https://github.com/syl20bnr/spacemacs/issues/2705
   ;; (setq tramp-mode nil)
