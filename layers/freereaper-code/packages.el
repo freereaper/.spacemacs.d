@@ -1,6 +1,7 @@
 (defconst freereaper-code-packages
   '(
     etags-select
+    ycmd
     )
   )
 
@@ -19,3 +20,18 @@
         (lambda () (interactive) (find-tag last-tag t)))
 
       (evilified-state-evilify etags-select-mode etags-select-mode-map))))
+
+
+(defun freereaper-code/post-init-ycmd ()
+  (global-company-mode)
+  (global-ycmd-mode)
+  (company-ycmd-setup)
+  (set-variable
+   'ycmd-server-command
+   '("python" "/home/reaper/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
+
+  (set-variable 'ycmd-extra-conf-whitelist '("~/*"))
+  (set-variable 'ycmd-global-modes 'all)
+  (set-variable 'ycmd-parse-conditions
+                '(save new-line mode-enabled idle-change buffer-focus))
+  )

@@ -166,3 +166,49 @@ Single Capitals as you type."
             ',variable ,value))
 
 (csetq ediff-diff-options "-w")
+
+;; Removes silly .#<name> lock files. Unfortunately there's no way to move
+;; these to a tmp folder; we can only have them in the same folder as the file
+;; being edited (zero chance of that) or not have them.
+(setq-default create-lockfiles nil)
+
+;; Prevents Emacs from asking "do you want to follow the symlink?" when
+;; editing a symlink. Yes Emacs, I do want to open the file.
+(setq vc-follow-symlinks t)
+
+;; Highlight all function calls in all programming modes.
+(add-hook 'prog-mode-hook
+ (lambda ()
+   (font-lock-add-keywords
+    nil
+    '(("\\([_a-zA-Z][_a-zA-Z0-9]*\\)!?(" 1 'font-lock-function-name-face)))
+))
+
+
+;; The below defadvice calls modify searching with '/' so that it recenters
+;; the screen after each jump.
+(defadvice
+    evil-ex-search-forward
+    (after evil-search-forward-recenter activate)
+  (recenter))
+(ad-activate 'evil-ex-search-forward)
+
+(defadvice
+    evil-ex-search-next
+    (after evil-search-next-recenter activate)
+  (recenter))
+(ad-activate 'evil-ex-search-next)
+
+(defadvice
+    evil-ex-search-previous
+    (after evil-search-previous-recenter activate)
+(recenter))
+(ad-activate 'evil-ex-search-previous)
+
+
+;; Soft-wrap (visual wrap) always for long lines that don't fit on the screen
+(global-visual-line-mode 1)
+
+;; Ensure that soft-wrap uses markers to show a line was wrapped
+(setq-default visual-line-fringe-indicators
+              '(left-curly-arrow right-curly-arrow))

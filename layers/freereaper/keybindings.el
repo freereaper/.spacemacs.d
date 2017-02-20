@@ -20,3 +20,6 @@
 (spacemacs/set-leader-keys "rh" 'helm-resume)
 
 (spacemacs/set-leader-keys "nl" 'spacemacs/evil-search-clear-highlight)
+
+(define-key evil-normal-state-map (kbd "zj") 'freereaper/empty-line-below)
+(define-key evil-normal-state-map (kbd "zk") 'freereaper/empty-line-above)
