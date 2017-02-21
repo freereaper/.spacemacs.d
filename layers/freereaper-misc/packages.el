@@ -66,8 +66,20 @@
 (defun freereaper-misc/init-helm-ag ()
   (use-package helm-ag
     :defer t
+    :commands (helm-source-do-ag)
     :init
     (progn
+      ;; This function can be used to make any helm command automatically follow
+      (defun freereaper/followize (command source)
+        (lexical-let ((hc command)
+                      (s source))
+          (lambda ()
+            (interactive)
+            (let ((prev-follow-val (helm-attr 'follow s)))
+              (helm-attrset 'follow 1 s)
+              (call-interactively hc)
+              (helm-attrset 'follow prev-follow-val s)))))
+
       (defun spacemacs//helm-do-ag-region-or-symbol (func &optional dir)
         "Search with `ag' with a default input."
         (require 'helm-ag)
@@ -325,7 +337,6 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
       (evilified-state-evilify helm-grep-mode helm-grep-mode-map
         (kbd "RET") 'helm-grep-mode-jump-other-window
         (kbd "q") 'quit-window)
-
       (spacemacs/set-leader-keys
         ;; helm-ag marks
         "s`"  'helm-ag-pop-stack
@@ -353,6 +364,7 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
         "stf" 'spacemacs/helm-files-do-pt
         "stF" 'spacemacs/helm-files-do-pt-region-or-symbol
         ;; current project scope
+        ;; "/"   (freereaper/followize 'spacemacs/helm-project-do-ag helm-source-do-ag)
         "/"   'spacemacs/helm-project-do-ag
         "*"   'spacemacs/helm-project-do-ag-region-or-symbol
         "skp" 'spacemacs/helm-project-do-ack

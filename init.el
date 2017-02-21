@@ -321,17 +321,19 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-   (setq url-proxy-services
-           '(("no_proxy" . "^\\(localhost\\)")
-             ("http" . "10.30.24.3:985")
-             ("https" . "10.30.24.3:985")))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   ;; (setq url-proxy-services                                                      ;;
+   ;;         '(("no_proxy" . "^\\(localhost\\)")                                   ;;
+   ;;           ("http" . "10.30.24.3:985")                                         ;;
+   ;;           ("https" . "10.30.24.3:985")))                                      ;;
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; (setq url-proxy-services                                                       ;;
-  ;;          '(("no_proxy" . "^\\(localhost\\)")                                   ;;
-  ;;            ("http" . "192.168.0.105:1080")                                     ;;
-  ;;            ("https" . "192.168.0.105:1080")))                                  ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (setq url-proxy-services
+           '(("no_proxy" . "^\\(localhost\\)")
+             ("http" . "192.168.0.105:1080")
+             ("https" . "192.168.0.105:1080")))
+
 
 
   ;; https://github.com/syl20bnr/spacemacs/issues/2705
@@ -346,6 +348,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq purpose-mode nil)
 
   (setq debug-on-error t)
+
+
  )
 
 (defun dotspacemacs/user-config ()
@@ -365,6 +369,18 @@ you should place your code here."
   (spacemacs|diminish which-key-mode)
   (spacemacs|diminish spacemacs-whitespace-cleanup-mode)
   (spacemacs|diminish counsel-mode)
+
+  ;; Follow in imenu
+  (require 'helm-imenu)
+  (setq helm-source-imenu
+        (helm-make-source "Imenu" 'helm-imenu-source
+          :fuzzy-match helm-imenu-fuzzy-match
+          :follow 1))
+  (setq helm-source-imenu-all
+        (helm-make-source "Imenu in all buffers" 'helm-imenu-source
+          :candidates 'helm-imenu-candidates-in-all-buffers
+          :fuzzy-match helm-imenu-fuzzy-match
+          :follow 1))
 
   (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
   (load custom-file 'no-error 'no-message)

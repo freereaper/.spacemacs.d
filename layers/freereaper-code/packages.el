@@ -1,7 +1,7 @@
 (defconst freereaper-code-packages
   '(
     etags-select
-    ycmd
+    ;; ycmd
     )
   )
 
@@ -23,9 +23,6 @@
 
 
 (defun freereaper-code/post-init-ycmd ()
-  (global-company-mode)
-  (global-ycmd-mode)
-  (company-ycmd-setup)
   (set-variable
    'ycmd-server-command
    '("python" "/home/reaper/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
