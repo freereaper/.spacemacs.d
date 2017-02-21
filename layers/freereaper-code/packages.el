@@ -27,8 +27,12 @@
    'ycmd-server-command
    '("python" "/home/reaper/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
 
-  (set-variable 'ycmd-extra-conf-whitelist '("~/*"))
-  (set-variable 'ycmd-global-modes 'all)
-  (set-variable 'ycmd-parse-conditions
-                '(save new-line mode-enabled idle-change buffer-focus))
-  )
+  (set-variable 'ycmd-extra-conf-whitelist '("~/ws/p4ws/reaper_code/sw/s3gdrv/Source_New/*"))
+  (freereaper|toggle-company-backends company-ycmd)
+  (eval-after-load 'ycmd
+    '(spacemacs|hide-lighter ycmd-mode))
+
+  (spacemacs/set-leader-keys-for-major-mode 'c-mode
+    "tb" 'freereaper/company-toggle-company-ycmd)
+  (spacemacs/set-leader-keys-for-major-mode 'c++-mode
+    "tb" 'freereaper/company-toggle-company-ycmd))

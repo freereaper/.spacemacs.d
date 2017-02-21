@@ -62,8 +62,7 @@ values."
                       syntax-checking-enable-tooltips nil)
      (gtags :disabled-for clojure emacs-lisp javascript latex python shell-scripts)
      (shell :variables shell-default-shell 'eshell)
-     (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode)
+     c-c++
      emacs-lisp
      ;; git
      markdown
