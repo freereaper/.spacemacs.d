@@ -1,6 +1,7 @@
 (defconst freereaper-c-packages
   '(
     (cc-mode :location built-in)
+    rtags
     ))
 
 (defun freereaper-c/post-init-cc-mode ()
@@ -21,7 +22,7 @@
 
   (dolist (mode '(c-mode c++-mode))
     (spacemacs/set-leader-keys-for-major-mode mode
-      "gd" 'etags-select-find-tag-at-point))
+      "gg" 'etags-select-find-tag-at-point))
 
   (add-hook 'c++-mode-hook 'freereaper/setup-coding-env)
   (add-hook 'c-mode-hook 'freereaper/setup-coding-env)
@@ -48,3 +49,48 @@
     (define-key c++-mode-map (kbd "s-.") 'company-ycmd))
 
   )
+
+(defun freereaper-c/init-rtags ()
+  (use-package rtags
+    :defer f
+    :init
+    (progn
+      (require 'rtags-helm)
+      (spacemacs/set-leader-keys-for-major-mode 'c-mode
+        "fg" (freereaper/followize  'rtags-find-symbol-at-point rtags-helm-source)
+        "fG" 'freereaper/rtags-find-symbol-at-point-other-file
+        "fs" (freereaper/followize 'rtags-find-symbol rtags-helm-source)
+        "fc" (freereaper/followize 'rtags-find-references-at-point rtags-helm-source)
+        )
+
+      (spacemacs/set-leader-keys-for-major-mode 'c++-mode
+        "fd" 'rtags-find-symbol-at-point
+        "fD" 'freereaper/rtags-find-symbol-at-point-other-file
+        "fs" 'rtags-find-symbol
+        "fc" 'rtags-find-references-at-point
+        ;; "r" 'rtags-find-references-at-point-in-file to implement
+        "v" 'rtags-find-virtuals-at-point
+        "C-r" 'rtags-rename-symbol
+
+        ;; print prefix
+        "pt" 'rtags-print-class-hierarchy
+        "pe" 'rtags-print-enum-value-at-point
+        "pi" 'rtags-print-dependencies
+        "ps" 'rtags-print-symbol-info
+        "pp" 'rtags-preprocess-file
+
+        ;; TODO: planned micro state
+        ;; "o" (rtags-occurence-transient state)
+        ;; "n" 'rtags-next-match
+        ;; "N/p" 'rtags-previous-match
+        ))
+    :config
+    (progn
+      (require 'rtags-helm)
+      (setq rtags-jump-to-first-match nil)
+      (setq rtags-use-helm t)
+      (add-hook 'rtags-jump-hook 'evil-set-jump)
+      (add-to-list 'spacemacs-jump-handlers-c++-mode
+                   '(rtags-find-symbol-at-point :async t)))
+    )
+)

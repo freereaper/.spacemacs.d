@@ -110,3 +110,14 @@ org-files and bookmarks"
   (interactive)
   (counsel-imenu)
   (evil-set-jump))
+
+;; This function can be used to make any helm command automatically follow
+(defun freereaper/followize (command source)
+  (lexical-let ((hc command)
+                (s source))
+    (lambda ()
+      (interactive)
+      (let ((prev-follow-val (helm-attr 'follow s)))
+        (helm-attrset 'follow 1 s)
+        (call-interactively hc)
+        (helm-attrset 'follow prev-follow-val s)))))

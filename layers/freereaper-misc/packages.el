@@ -66,20 +66,8 @@
 (defun freereaper-misc/init-helm-ag ()
   (use-package helm-ag
     :defer t
-    :commands (helm-source-do-ag)
     :init
     (progn
-      ;; This function can be used to make any helm command automatically follow
-      (defun freereaper/followize (command source)
-        (lexical-let ((hc command)
-                      (s source))
-          (lambda ()
-            (interactive)
-            (let ((prev-follow-val (helm-attr 'follow s)))
-              (helm-attrset 'follow 1 s)
-              (call-interactively hc)
-              (helm-attrset 'follow prev-follow-val s)))))
-
       (defun spacemacs//helm-do-ag-region-or-symbol (func &optional dir)
         "Search with `ag' with a default input."
         (require 'helm-ag)

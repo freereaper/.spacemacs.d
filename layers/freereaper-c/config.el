@@ -16,3 +16,9 @@
       (append
        '(("\\.mak\\'" . makefile-bsdmake-mode))
        auto-mode-alist))
+
+;; Extra hightlight for stdint.h
+(dolist (m '(c-mode c++-mode))
+  (font-lock-add-keywords
+   m
+   '(("\\<\\(int8_t\\|int16_t\\|int32_t\\|int64_t\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\)\\>" . font-lock-keyword-face))))

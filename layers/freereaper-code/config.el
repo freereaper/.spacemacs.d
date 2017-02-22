@@ -9,3 +9,15 @@
        (if (eq (car company-backends) ',backend)
            (setq-local company-backends (delete ',backend company-backends))
          (push ',backend company-backends)))))
+
+
+(defadvice
+    helm-cscope-find-calling-this-funtcion
+    (after helm-cscope-find-calling-this-function-recenter activate)
+  (recenter))
+
+
+(defadvice
+    helm-cscope-find-global-definition
+    (after helm-cscope-find-global-definition-recenter activate)
+  (recenter))

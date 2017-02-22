@@ -113,6 +113,7 @@ This functions should be added to the hooks of major modes for programming."
     (cond
      ((my-project-name-contains-substring "cocos2d-x")
       ;; C++ project don't need html tags
+      (message "load tags for cocos2d-x...")
       (setq tags-table-list (list (my-create-tags-if-needed "~/cocos2d-x/cocos"))))
      ((my-project-name-contains-substring "Github/fireball")
       (message "load tags for fireball engine repo...")

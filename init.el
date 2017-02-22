@@ -85,7 +85,12 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(smartparens ivy-purpose helm-purpose org-projectile
+                                                org-repo-todo org-download org-timer
+                                                ace-jump-mode org-present fancy-battery
+                                                flx-ido counsel-projectile helm-make evil-lisp-state
+                                                spacemacs-purpose-popwin
+                                                )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -188,7 +193,7 @@ values."
    ;; and TAB or <C-m> and RET.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
-   dotspacemacs-distinguish-gui-tab nil
+   dotspacemacs-distinguish-gui-tab t
    ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
    dotspacemacs-remap-Y-to-y$ t
    ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
@@ -328,12 +333,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  (setq url-proxy-services
-           '(("no_proxy" . "^\\(localhost\\)")
-             ("http" . "192.168.0.105:1080")
-             ("https" . "192.168.0.105:1080")))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; (setq url-proxy-services                                                       ;;
+  ;;          '(("no_proxy" . "^\\(localhost\\)")                                   ;;
+  ;;            ("http" . "192.168.0.105:1080")                                     ;;
+  ;;            ("https" . "192.168.0.105:1080")))                                  ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+  (load (expand-file-name "proxy.el" dotspacemacs-directory))
 
   ;; https://github.com/syl20bnr/spacemacs/issues/2705
   ;; (setq tramp-mode nil)
@@ -399,7 +407,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck-ycmd company-ycmd ycmd request-deferred deferred auto-dictionary yapfify ranger rainbow-mode rainbow-identifiers pyvenv pytest pyenv-mode py-isort prodigy pip-requirements live-py-mode hy-mode flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck engine-mode cython-mode company-anaconda color-identifiers-mode anaconda-mode pythonic xterm-color ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline powerline smex smeargle shell-pop restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode ibuffer-projectile hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt hexo help-fns+ helm-make helm-github-stars helm-ag helm helm-core graphviz-dot-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md ggtags flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s disaster diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy company-statistics company-c-headers company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup quelpa package-build color-theme-sanityinc-tomorrow))))
+    (helm-cscope xcscope rtags flycheck-ycmd company-ycmd ycmd request-deferred deferred auto-dictionary yapfify ranger rainbow-mode rainbow-identifiers pyvenv pytest pyenv-mode py-isort prodigy pip-requirements live-py-mode hy-mode flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck engine-mode cython-mode company-anaconda color-identifiers-mode anaconda-mode pythonic xterm-color ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline powerline smex smeargle shell-pop restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode ibuffer-projectile hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt hexo help-fns+ helm-make helm-github-stars helm-ag helm helm-core graphviz-dot-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md ggtags flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s disaster diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy company-statistics company-c-headers company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup quelpa package-build color-theme-sanityinc-tomorrow))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
