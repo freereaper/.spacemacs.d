@@ -44,6 +44,8 @@
 
   (freereaper|toggle-company-backends company-ycmd)
 
+  (eval-after-load 'ycmd
+    '(spacemacs|hide-lighter ycmd-mode))
 
   (spacemacs/set-leader-keys-for-major-mode 'c-mode
     "tb" 'freereaper/company-toggle-company-ycmd)

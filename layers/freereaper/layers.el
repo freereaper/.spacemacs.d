@@ -2,7 +2,8 @@
                                      freereaper-ui
                                      freereaper-blog
                                      freereaper-org
-                                     freereaper-misc
+                                     (freereaper-misc :variables
+                                                      chinese-enable-fcitx t)
                                      freereaper-better-defaults
                                      freereaper-code
                                      ))

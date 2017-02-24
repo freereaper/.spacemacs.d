@@ -397,11 +397,11 @@ holding contextual information."
       (add-hook 'org-octopress-summary-mode-hook
                 #'(lambda () (local-set-key (kbd "q") 'bury-buffer)))
       (setq org-blog-dir blog-admin-dir)
-      (setq org-octopress-directory-top "/home/reaper/4gamers.cn/source")
-      (setq org-octopress-directory-posts "/home/reaper/4gamers.cn/source/_posts")
-      (setq org-octopress-directory-org-top "/home/reaper/4gamers.cn/source")
-      (setq org-octopress-directory-org-posts "/home/reaper/4gamers.cn/org/source" )
-      (setq org-octopress-setup-file "/home/reaper/4gamers.cn/org/setupfile.org")
+      (setq org-octopress-directory-top "/home/reaper/freereaper.com/source")
+      (setq org-octopress-directory-posts "/home/reaper/freereaper.com/source/_posts")
+      (setq org-octopress-directory-org-top "/home/reaper/freereaper.com/source")
+      (setq org-octopress-directory-org-posts "/home/reaper/freereaper.com/org/source" )
+      (setq org-octopress-setup-file "/home/reaper/freereaper.com/org/setupfile.org")
 
       )))
 

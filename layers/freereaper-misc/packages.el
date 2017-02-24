@@ -9,6 +9,7 @@
                                  ranger
                                  golden-ratio
                                  persp-mode
+                                 (fcitx :toggle chinese-enable-fcitx)
                                  ))
 
 (defun freereaper-misc/init-find-file-in-project ()
@@ -21,7 +22,7 @@
       ;;(setq ffip-project-file ".svn")
       ;; in MacOS X, the search file command is CMD+p
       ;; for this project, I'm only interested certain types of files
-      (setq-default ffip-patterns '("*.html" "*.js" "*.css" "*.java" "*.xml" "*.cpp" "*.h" "*.c" "*.mm" "*.m" "*.el"))
+      (setq-default ffip-patterns '("*.html" "*.js" "*.css" "*.java" "*.xml" "*.cpp" "*.h" "*.c" "*.mm" "*.m" "*.el" "*.mk"))
       ;; if the full path of current file is under SUBPROJECT1 or SUBPROJECT2
       ;; OR if I'm reading my personal issue track document,
       (defadvice find-file-in-project (before my-find-file-in-project activate compile)
@@ -492,3 +493,10 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
       :tags '(org-mode)
       :kill-signal 'sigkill
       :kill-process-buffer-on-stop t)))
+
+(defun freereaper-misc/init-fcitx ()
+  (use-package fcitx
+    :config
+    (fcitx-evil-turn-on)
+    )
+  )
