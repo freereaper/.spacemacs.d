@@ -261,9 +261,9 @@ unwanted space when exporting org-mode to html."
       (setq org-publish-project-alist
             `(
               ("blog-notes"
-               :base-directory "~/org-notes"
+               :base-directory "~/Dropbox/org-notes"
                :base-extension "org"
-               :publishing-directory "~/org-notes/public_html/"
+               :publishing-directory "~/Dropbox/org-notes/public_html/"
 
                :recursive t
                :html-head , freereaper-website-html-blog-head
@@ -278,14 +278,14 @@ unwanted space when exporting org-mode to html."
                :email "freereaper@aliyun.com"
                :auto-sitemap t          ; Generate sitemap.org automagically...
                :sitemap-filename "index.org" ; ... call it sitemap.org (it's the default)...
-               :sitemap-title "我的wiki"     ; ... with title 'Sitemap'.
+               :sitemap-title "freereaper's wiki"     ; ... with title 'Sitemap'.
                :sitemap-sort-files anti-chronologically
                :sitemap-file-entry-format "%t" ; %d to output date, we don't need date here
                )
               ("blog-static"
-               :base-directory "~/org-notes"
+               :base-directory "~/Dropbox/org-notes"
                :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-               :publishing-directory "~/org-notes/public_html/"
+               :publishing-directory "~/Dropbox/org-notes/public_html/"
                :recursive t
                :publishing-function org-publish-attachment
                )

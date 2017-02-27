@@ -489,7 +489,7 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
       :name "Org wiki preview"
       :command "python"
       :args '("-m" "SimpleHTTPServer" "8088")
-      :cwd "~/org-notes/public_html"
+      :cwd "~/Dropbox/org-notes/public_html"
       :tags '(org-mode)
       :kill-signal 'sigkill
       :kill-process-buffer-on-stop t)))

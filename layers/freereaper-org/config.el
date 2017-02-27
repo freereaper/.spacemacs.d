@@ -5,8 +5,8 @@
   "deft org files locaiton")
 
 (setq-default
- org-agenda-dir "~/org-notes"
- deft-dir "~/org-notes")
+ org-agenda-dir "~/Dropbox/org-notes"
+ deft-dir "~/Dropbox/org-notes")
 
 (defun freereaper/org-ispell ()
   "Configure `ispell-skip-region-alist' for `org-mode'."
@@ -17,3 +17,5 @@
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC")))
 
 (add-hook 'org-mode-hook #'freereaper/org-ispell)
+(add-hook 'org-src-mode-hook (lambda ()
+                               (spacemacs/toggle-line-numbers-off)))
