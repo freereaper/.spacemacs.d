@@ -52,8 +52,3 @@
   (let (org-log-done org-log-states)    ; turn off logging
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
-
-(defun freereaper/org-save-and-export ()
-  (interactive)
-  (org-octopress-setup-publish-project)
-  (org-publish-project "octopress" t))

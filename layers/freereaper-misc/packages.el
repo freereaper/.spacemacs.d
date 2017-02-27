@@ -353,8 +353,8 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
         "stF" 'spacemacs/helm-files-do-pt-region-or-symbol
         ;; current project scope
         ;; "/"   (freereaper/followize 'spacemacs/helm-project-do-ag helm-source-do-ag)
-        "/"   'spacemacs/helm-project-do-ag
-        "*"   'spacemacs/helm-project-do-ag-region-or-symbol
+        "/"   'spacemacs/helm-project-do-pt
+        "*"   'spacemacs/helm-project-do-pt-region-or-symbol
         "skp" 'spacemacs/helm-project-do-ack
         "skP" 'spacemacs/helm-project-do-ack-region-or-symbol
         "stp" 'spacemacs/helm-project-do-pt

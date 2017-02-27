@@ -1,7 +1,6 @@
 (defconst freereaper-org-packages
   '(
     (org :location built-in)
-    org-octopress
     org-pomodoro
     deft
     org-bullets
@@ -387,23 +386,6 @@ holding contextual information."
     :init
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
    ))
-
-(defun freereaper-org/init-org-octopress ()
-  (use-package org-octopress
-    :commands (org-octopress org-octopress-setup-publish-project)
-    :init
-    (progn
-      (evilified-state-evilify org-octopress-summary-mode org-octopress-summary-mode-map)
-      (add-hook 'org-octopress-summary-mode-hook
-                #'(lambda () (local-set-key (kbd "q") 'bury-buffer)))
-      (setq org-blog-dir blog-admin-dir)
-      (setq org-octopress-directory-top "/home/reaper/4gamers.cn/source")
-      (setq org-octopress-directory-posts "/home/reaper/4gamers.cn/source/_posts")
-      (setq org-octopress-directory-org-top "/home/reaper/4gamers.cn/source")
-      (setq org-octopress-directory-org-posts "/home/reaper/4gamers.cn/org/source" )
-      (setq org-octopress-setup-file "/home/reaper/4gamers.cn/org/setupfile.org")
-
-      )))
 
 (defun freereaper-org/post-init-deft ()
   (progn

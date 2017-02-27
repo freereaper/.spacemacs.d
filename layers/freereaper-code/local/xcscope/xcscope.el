@@ -2712,8 +2712,7 @@ indexer"
           ;; this less ugly, but I want to support xemacs too, and thus I just live with
           ;; the uglyness
           (mapcar 'shell-quote-argument
-                  `("-L"
-
+                  `(
                     ,dir
 
                     ;; limit the search depth if we're not searching recursively
