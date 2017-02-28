@@ -1,7 +1,6 @@
 (defconst freereaper-org-packages
   '(
     (org :location built-in)
-    org-octopress
     org-pomodoro
     deft
     org-bullets
@@ -217,7 +216,7 @@ unwanted space when exporting org-mode to html."
               ("s" "Code Snippet" entry
                (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
-              ("w" "work" entry (file+headline org-agenda-file-gtd "Cocos2D-X")
+              ("w" "work" entry (file+headline org-agenda-file-gtd "ZhaoXin")
                "* TODO [#A] %?\n  %i\n %U"
                :empty-lines 1)
               ("c" "Chrome" entry (file+headline org-agenda-file-note "Quick notes")
@@ -343,9 +342,7 @@ holding contextual information."
                        (itemized-body
                         (org-html-format-list-item
                          contents type nil info nil
-                         (concat (org-html--anchor preferred-id nil nil info)
-                                 extra-ids
-                                 full-text))))
+)))
                   (concat (and (org-export-first-sibling-p headline info)
                                (org-html-begin-plain-list type))
                           itemized-body
@@ -387,23 +384,6 @@ holding contextual information."
     :init
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
    ))
-
-(defun freereaper-org/init-org-octopress ()
-  (use-package org-octopress
-    :commands (org-octopress org-octopress-setup-publish-project)
-    :init
-    (progn
-      (evilified-state-evilify org-octopress-summary-mode org-octopress-summary-mode-map)
-      (add-hook 'org-octopress-summary-mode-hook
-                #'(lambda () (local-set-key (kbd "q") 'bury-buffer)))
-      (setq org-blog-dir blog-admin-dir)
-      (setq org-octopress-directory-top "/home/reaper/freereaper.com/source")
-      (setq org-octopress-directory-posts "/home/reaper/freereaper.com/source/_posts")
-      (setq org-octopress-directory-org-top "/home/reaper/freereaper.com/source")
-      (setq org-octopress-directory-org-posts "/home/reaper/freereaper.com/org/source" )
-      (setq org-octopress-setup-file "/home/reaper/freereaper.com/org/setupfile.org")
-
-      )))
 
 (defun freereaper-org/post-init-deft ()
   (progn
