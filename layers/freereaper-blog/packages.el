@@ -55,5 +55,7 @@
       (setq org-octopress-directory-posts (concat org-blog-dir "source/_posts/"))
       (setq org-octopress-directory-org-top org-blog-dir)
       (setq org-octopress-directory-org-posts (concat org-blog-dir "org/source/"))
-      (setq org-octopress-setup-file (concat org-blog-dir "org/setupfile.org/"))
-      )))
+      (setq org-octopress-setup-file (concat org-blog-dir "org/setupfile.org"))
+      )
+    :config
+    (org-octopress-setup-publish-project)))

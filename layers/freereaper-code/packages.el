@@ -39,6 +39,7 @@
   (set-variable
    'ycmd-server-command
    '("python" "/home/reaper/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
+  (set-variable 'ycmd-global-config "/home/reaper/.vim/.ycm_extra_conf_global.py")
 
   (set-variable 'ycmd-extra-conf-whitelist '("~/ws/*"))
 
