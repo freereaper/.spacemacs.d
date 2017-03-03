@@ -21,3 +21,8 @@
     helm-cscope-find-global-definition
     (after helm-cscope-find-global-definition-recenter activate)
   (recenter))
+
+(defadvice
+    dumb-jump-go-other-window
+    (after dumb-jump-go-other-window-recenter activate)
+  (recenter))

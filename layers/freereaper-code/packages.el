@@ -4,6 +4,7 @@
     (xcscope :location local)
     (helm-cscope :location local)
     ycmd
+    dumb-jump
     flycheck
       )
   )
@@ -111,4 +112,18 @@
       (setq flycheck-display-errors-delay 0.4)
       (setq flycheck-idle-change-delay 2.0)
       ))
+  )
+
+(defun freereaper-code/post-init-dumb-jump ()
+  (setq dumb-jump-selector 'ivy)
+  ;; if project root not found, this is the default project root.
+  (setq dumb-jump-default-project "~/ws")
+  (defun my-dumb-jump ()
+    (interactive)
+    (evil-set-jump)
+    (dumb-jump-go)
+    (recenter))
+
+  (bind-key* "M-g j" 'my-dumb-jump)
+  (bind-key* "M-g o" 'dumb-jump-go-other-window)
   )
