@@ -20,3 +20,7 @@
   (interactive)
   (freereaper/followize 'rtags-find-references-at-point rtags-helm-source)
  )
+
+(defun my-doxymacs-font-lock-hook ()
+  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+(doxymacs-font-lock)))

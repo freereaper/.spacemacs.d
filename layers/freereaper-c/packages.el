@@ -1,6 +1,7 @@
 (defconst freereaper-c-packages
   '(
     (cc-mode :location built-in)
+    (doxymacs :location local)
     rtags
     ))
 
@@ -43,9 +44,18 @@
   (setq c-basic-offset 4)
   (c-set-offset 'substatement-open 0)
   (with-eval-after-load 'c++-mode
-    (define-key c++-mode-map (kbd "s-.") 'company-ycmd))
+    (define-key c++-mode-map (kbd "s-.") 'company-ycmd)))
 
-  )
+(defun freereaper-c/init-doxymacs ()
+  "Initialize doxymacs"
+  (use-package doxymacs
+    :init
+    (add-hook 'c-mode-common-hook 'doxymacs-mode)
+    (add-hook 'c++-mode-common-hook 'doxymacs-mode)
+    :config
+    (progn
+      (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+(spacemacs|hide-lighter doxymacs-mode))))
 
 (defun freereaper-c/init-rtags ()
   (use-package rtags
