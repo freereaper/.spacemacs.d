@@ -57,14 +57,14 @@
     (progn
       (require 'rtags-helm)
       (spacemacs/set-leader-keys-for-major-mode 'c-mode
-        "fg" (freereaper/followize  'rtags-find-symbol-at-point rtags-helm-source)
+        "fg" 'freereaper/rtags-find-symbol-at-point
         "fG" 'freereaper/rtags-find-symbol-at-point-other-file
-        "fs" (freereaper/followize 'rtags-find-symbol rtags-helm-source)
-        "fc" (freereaper/followize 'rtags-find-references-at-point rtags-helm-source)
+        "fs" 'freereaper/rtags-find-symbol
+        "fc" 'freereaper/rtags-find-references-at-point
         )
 
       (spacemacs/set-leader-keys-for-major-mode 'c++-mode
-        "fd" 'rtags-find-symbol-at-point
+        "fd" 'freereaper/rtags-find-symbol-at-point
         "fD" 'freereaper/rtags-find-symbol-at-point-other-file
         "fs" 'rtags-find-symbol
         "fc" 'rtags-find-references-at-point
