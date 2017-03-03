@@ -20,12 +20,9 @@
                                                 magic-mode-regexp-match-limit t))))
                   . c++-mode))
 
-  (dolist (mode '(c-mode c++-mode))
-    (spacemacs/set-leader-keys-for-major-mode mode
-      "gg" 'etags-select-find-tag-at-point))
 
-  (add-hook 'c++-mode-hook 'freereaper/setup-coding-env)
-  (add-hook 'c-mode-hook 'freereaper/setup-coding-env)
+  (add-hook 'c++-mode-hook 'freereaper/setup-development-environment)
+  (add-hook 'c-mode-hook 'freereaper/setup-development-environment)
 
   ;; http://stackoverflow.com/questions/23553881/emacs-indenting-of-c11-lambda-functions-cc-mode
   (defadvice c-lineup-arglist (around my activate)

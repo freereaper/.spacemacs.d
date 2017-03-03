@@ -3,6 +3,7 @@
     etags-select
     (xcscope :location local)
     (helm-cscope :location local)
+    (find-and-ctags :location local)
     ycmd
     dumb-jump
     flycheck
@@ -22,6 +23,10 @@
 
       (define-key evil-normal-state-map (kbd "gn")
         (lambda () (interactive) (find-tag last-tag t)))
+
+      (dolist (mode '(c-mode c++-mode))
+        (spacemacs/set-leader-keys-for-major-mode mode
+          "gg" 'etags-select-find-tag-at-point))
 
       (evilified-state-evilify etags-select-mode etags-select-mode-map))))
 
@@ -56,6 +61,10 @@
 
   )
 
+(defun freereaper-code/init-find-and-ctags ()
+  (use-package find-and-ctags)
+
+  )
 
 (defun freereaper-code/init-xcscope ()
   (use-package xcscope

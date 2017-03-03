@@ -81,44 +81,20 @@ This functions should be added to the hooks of major modes for programming."
      ("\\<\\(DONE\\):" 1 'org-done t))
    ))
 
-(defun my-create-tags-if-needed (SRC-DIR &optional FORCE)
-  "return the full path of tags file"
-  (let ((dir (file-name-as-directory (file-truename SRC-DIR)))
-        file)
-    (setq file (concat dir "TAGS"))
-    (when (spacemacs/system-is-mswindows)
-      (setq dir (substring dir 0 -1)))
-    (when (or FORCE (not (file-exists-p file)))
-      (message "Creating TAGS in %s ..." dir)
-      (shell-command
-       (format "/usr/bin/ctags -f %s -e -R %s" file dir)))
-    file))
 
-(defun my-update-tags ()
+
+(defun freereaper/setup-development-environment ()
   (interactive)
-  "check the tags in tags-table-list and re-create it"
-  (dolist (tag tags-table-list)
-    (my-create-tags-if-needed (file-name-directory tag) t)))
-
-
-(defun my-project-name-contains-substring (REGEX)
-  (let ((dir (if (buffer-file-name)
-                 (file-name-directory (buffer-file-name))
-               "")))
-    (string-match-p REGEX dir)))
-
-(defun freereaper/setup-coding-env ()
-  (interactive)
-  (when (my-project-name-contains-substring "guanghui")
+  (when (find-and-ctags-current-path-match-pattern-p "reaper")
     (cond
-     ((my-project-name-contains-substring "cocos2d-x")
+     ((find-and-ctags-current-path-match-pattern-p "/Source_New/")
       ;; C++ project don't need html tags
-      (message "load tags for cocos2d-x...")
-      (setq tags-table-list (list (my-create-tags-if-needed "~/cocos2d-x/cocos"))))
-     ((my-project-name-contains-substring "Github/fireball")
-      (message "load tags for fireball engine repo...")
+      (message "load tags for Source_New  ...")
+      (setq-local tags-table-list (list (find-and-ctags-run-ctags-if-needed "~/ws/p4ws/reaper_code/sw/s3gdrv/Source_New"))))
+     ((find-and-ctags-current-path-match-pattern-p "/Source_New_ZX2000/")
+      (message "load tags for Source_New_ZX2000 ...")
       ;; html project donot need C++ tags
-      (setq tags-table-list (list (my-create-tags-if-needed "~/Github/fireball/engine/cocos2d")))))))
+      (setq-local tags-table-list (list (find-and-ctags-run-ctags-if-needed "~/ws/p4ws/reaper_code/sw/s3gdrv/Source_New_ZX2000")))))))
 
 
 (defun freereaper/load-my-layout ()

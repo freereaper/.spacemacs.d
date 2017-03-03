@@ -26,3 +26,9 @@
     dumb-jump-go-other-window
     (after dumb-jump-go-other-window-recenter activate)
   (recenter))
+
+
+(defadvice
+    etags-select-find
+    (after etags-select-find-recenter activate)
+  (recenter))
