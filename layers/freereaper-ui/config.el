@@ -88,3 +88,4 @@
   (run-with-idle-timer 0.1 nil #'linum-update-current))
 
 (display-time-mode 1)
+(setq display-time-24hr-format t)

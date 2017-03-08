@@ -91,6 +91,14 @@ This functions should be added to the hooks of major modes for programming."
       ;; C++ project don't need html tags
       (message "load tags for Source_New  ...")
       (setq-local tags-table-list (list (find-and-ctags-run-ctags-if-needed "~/ws/p4ws/reaper_code/sw/s3gdrv/Source_New"))))
+
+     ((or (find-and-ctags-current-path-match-pattern-p "/Source_New_ZX2000_TVOS2_0_Trunk/")
+          (find-and-ctags-current-path-match-pattern-p "/ZXTVOS2_0_Trunk/")
+        )
+      ;; C++ project don't need html tags
+      (message "load tags for Source_New_ZX2000_TVOS2_0_Trunk  ...")
+      (setq-local tags-table-list (list (find-and-ctags-run-ctags-if-needed "~/ws/p4ws/reaper_code/sw/s3gdrv/Source_New_ZX2000_TVOS2_0_Trunk"))))
+
      ((find-and-ctags-current-path-match-pattern-p "/Source_New_ZX2000/")
       (message "load tags for Source_New_ZX2000 ...")
       ;; html project donot need C++ tags

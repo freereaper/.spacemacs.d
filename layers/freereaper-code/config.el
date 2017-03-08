@@ -29,6 +29,6 @@
 
 
 (defadvice
-    etags-select-find
-    (after etags-select-find-recenter activate)
+    etags-select-goto-tag
+    (after etags-select-goto-tag-recenter activate)
   (recenter))
