@@ -209,6 +209,8 @@ Single Capitals as you type."
 ;; Soft-wrap (visual wrap) always for long lines that don't fit on the screen
 (global-visual-line-mode 1)
 
-;; Ensure that soft-wrap uses markers to show a line was wrapped
-(setq-default visual-line-fringe-indicators
-              '(left-curly-arrow right-curly-arrow))
+;; stop cursor enter prompt
+;; http://ergoemacs.org/emacs/emacs_stop_cursor_enter_prompt.html
+(customize-set-variable
+ 'minibuffer-prompt-properties
+ (quote (read-only t cursor-intangible t face minibuffer-prompt)))
