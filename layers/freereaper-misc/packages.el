@@ -10,6 +10,7 @@
                                  golden-ratio
                                  persp-mode
                                  (fcitx :toggle chinese-enable-fcitx)
+                                 cal-china-x
                                  ))
 
 (defun freereaper-misc/init-find-file-in-project ()
@@ -498,5 +499,37 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
   (use-package fcitx
     :config
     (fcitx-evil-turn-on)
+    )
+  )
+
+(defun freereaper-misc/init-cal-china-x ()
+  (use-package cal-china-x
+    :config
+    (progn
+      (setq mark-holidays-incalendar t)
+      (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
+      (setq calendar-holidays cal-china-x-important-holidays)
+      ;;cal-china-x的配置参考http://blog.sina.com.cn/s/blog_569c4e040101gt4u.html
+      (setq my-holidays '( ;;公历节日
+                          (holiday-fixed 2 14 "情人节")
+                          (holiday-fixed 9 10 "教师节")
+                          (holiday-float 6 0 3 "父亲节")
+                          ;;农历节日
+                          (holiday-lunar 1 1 "春节" 0)
+                          (holiday-lunar 1 15 "元宵节" 0)
+                          (holiday-solar-term "清明" "清明节")
+                          (holiday-lunar 5 5 "端午节" 0)
+                          (holiday-lunar 7 7 "七夕情人节" 0)
+                          (holiday-lunar 8 15 "中秋节" 0)
+                          ;;纪念日
+                          (holiday-lunar 1 8  "laughing pig zhu's birthday" 0)
+                          (holiday-lunar 8 22 "happy lao ping's birthday" 0)
+                          (holiday-lunar 9 16 "yep, old enough" 0)
+                          (holiday-lunar 2 13 "外婆生日" 0)))
+      ;; 只显示我定制的节假日
+      (setq calendar-holidays my-holidays)
+      ;;打开Calendar时默认高亮节日
+      (setq calendar-mark-holidays-flag t)
+      )
     )
   )
