@@ -2,7 +2,8 @@
   '(
     (cc-mode :location built-in)
     (doxymacs :location local)
-    rtags
+    ;; maybe used in the after which support cmake
+    ;; rtags
     ))
 
 (defun freereaper-c/post-init-cc-mode ()

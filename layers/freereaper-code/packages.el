@@ -1,8 +1,9 @@
 (defconst freereaper-code-packages
   '(
     etags-select
-    (xcscope :location local)
-    (helm-cscope :location local)
+    ;; (xcscope :location local)
+    ;; (helm-cscope :location local)
+    helm-gtags
     (find-and-ctags :location local)
     ycmd
     dumb-jump
@@ -66,51 +67,53 @@
 
   )
 
-(defun freereaper-code/init-xcscope ()
-  (use-package xcscope
-   :commands (cscope-index-files cscope/run-pycscope)
-   :init
-   (progn
-     ;; for python projects, we don't want xcscope to rebuild the databse,
-     ;; because it uses cscope instead of pycscope
-     (setq cscope-option-do-not-update-database t
-           cscope-display-cscope-buffer nil)
-
-     (defun cscope//safe-project-root ()
-       "Return project's root, or nil if not in a project."
-       (and (fboundp 'projectile-project-root)
-            (projectile-project-p)
-            (projectile-project-root)))
-
-     (defun cscope/run-pycscope (directory)
-       (interactive (list (file-name-as-directory
-                           (read-directory-name "Run pycscope in directory: "
-                                                (cscope//safe-project-root)))))
-       (let ((default-directory directory))
-         (shell-command
-          (format "pycscope -R -f '%s'"
-                  (expand-file-name "cscope.out" directory)))))))
-  )
-
-(defun freereaper-code/init-helm-cscope ()
-  (use-package helm-cscope
-    :defer t
-    :init
-    (defun spacemacs/setup-helm-cscope (mode)
-      "Setup `helm-cscope' for MODE"
-      (require 'helm-cscope)
-      (spacemacs/set-leader-keys-for-major-mode mode
-        "gc" 'helm-cscope-find-calling-this-funtcion
-        "gC" 'helm-cscope-find-called-function
-        "gd" 'helm-cscope-find-global-definition
-        "ge" 'helm-cscope-find-egrep-pattern
-        "gf" 'helm-cscope-find-this-file
-        "gF" 'helm-cscope-find-files-including-file
-        "gr" 'helm-cscope-find-this-symbol
-        "gx" 'helm-cscope-find-this-text-string))
-    :config
-    (defadvice helm-cscope-find-this-symbol (before cscope/goto activate)
-(evil--jumps-push))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (defun freereaper-code/init-xcscope ()                                           ;;
+;;   (use-package xcscope                                                           ;;
+;;    :commands (cscope-index-files cscope/run-pycscope)                            ;;
+;;    :init                                                                         ;;
+;;    (progn                                                                        ;;
+;;      ;; for python projects, we don't want xcscope to rebuild the databse,       ;;
+;;      ;; because it uses cscope instead of pycscope                               ;;
+;;      (setq cscope-option-do-not-update-database t                                ;;
+;;            cscope-display-cscope-buffer nil)                                     ;;
+;;                                                                                  ;;
+;;      (defun cscope//safe-project-root ()                                         ;;
+;;        "Return project's root, or nil if not in a project."                      ;;
+;;        (and (fboundp 'projectile-project-root)                                   ;;
+;;             (projectile-project-p)                                               ;;
+;;             (projectile-project-root)))                                          ;;
+;;                                                                                  ;;
+;;      (defun cscope/run-pycscope (directory)                                      ;;
+;;        (interactive (list (file-name-as-directory                                ;;
+;;                            (read-directory-name "Run pycscope in directory: "    ;;
+;;                                                 (cscope//safe-project-root)))))  ;;
+;;        (let ((default-directory directory))                                      ;;
+;;          (shell-command                                                          ;;
+;;           (format "pycscope -R -f '%s'"                                          ;;
+;;                   (expand-file-name "cscope.out" directory)))))))                ;;
+;;   )                                                                              ;;
+;;                                                                                  ;;
+;; (defun freereaper-code/init-helm-cscope ()                                       ;;
+;;   (use-package helm-cscope                                                       ;;
+;;     :defer t                                                                     ;;
+;;     :init                                                                        ;;
+;;     (defun spacemacs/setup-helm-cscope (mode)                                    ;;
+;;       "Setup `helm-cscope' for MODE"                                             ;;
+;;       (require 'helm-cscope)                                                     ;;
+;;       (spacemacs/set-leader-keys-for-major-mode mode                             ;;
+;;         "gc" 'helm-cscope-find-calling-this-funtcion                             ;;
+;;         "gC" 'helm-cscope-find-called-function                                   ;;
+;;         "gd" 'helm-cscope-find-global-definition                                 ;;
+;;         "ge" 'helm-cscope-find-egrep-pattern                                     ;;
+;;         "gf" 'helm-cscope-find-this-file                                         ;;
+;;         "gF" 'helm-cscope-find-files-including-file                              ;;
+;;         "gr" 'helm-cscope-find-this-symbol                                       ;;
+;;         "gx" 'helm-cscope-find-this-text-string))                                ;;
+;;     :config                                                                      ;;
+;;     (defadvice helm-cscope-find-this-symbol (before cscope/goto activate)        ;;
+;; (evil--jumps-push))))                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun freereaper-code/post-init-flycheck ()
   (dolist (mode '(c-mode c++-mode))
@@ -135,4 +138,18 @@
 
   (bind-key* "M-g j" 'my-dumb-jump)
   (bind-key* "M-g o" 'dumb-jump-go-other-window)
+  )
+
+(defun freereaper-code/post-init-helm-gtags ()
+
+  (spacemacs/set-leader-keys-for-major-mode 'c-mode
+    "ff" 'helm-gtags-dwim
+    "fs" 'helm-gtags-dwim-other-window
+    )
+
+  (spacemacs/set-leader-keys-for-major-mode 'c++-mode
+    "ff" 'helm-gtags-dwim
+    "fs" 'helm-gtags-dwim-other-window
+    )
+
   )
