@@ -121,3 +121,9 @@ org-files and bookmarks"
         (helm-attrset 'follow 1 s)
         (call-interactively hc)
         (helm-attrset 'follow prev-follow-val s)))))
+
+;; http://emacs.stackexchange.com/questions/169/how-do-i-reload-a-file-in-a-buffer
+(defun freereaper/revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer :ignore-auto :noconfirm))
