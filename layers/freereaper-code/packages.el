@@ -116,9 +116,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun freereaper-code/post-init-flycheck ()
-  (dolist (mode '(c-mode c++-mode))
-    (spacemacs/add-flycheck-hook mode))
-
   (with-eval-after-load 'flycheck
     (progn
       (setq flycheck-display-errors-delay 0.4)

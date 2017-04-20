@@ -118,7 +118,7 @@ values."
    ;; (default t)
    dotspacemacs-elpa-https nil
    ;; Maximum allowed time in seconds to contact an ELPA repository.
-   dotspacemacs-elpa-timeout 5
+   dotspacemacs-elpa-timeout 10
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
@@ -316,7 +316,15 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup 'changed
-   ))
+   )
+
+  (if (string-match "T450s" (get-hostname))
+      (setq-default dotspacemacs-default-font '("Source Code Pro"
+                                                :size 18
+                                                :weight normal
+                                                :width normal
+                                                :powerline-scale 1.1)))
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -325,6 +333,11 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
+(setq configuration-layer--elpa-archives
+      '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+        ("org-cn" . "http://elpa.emacs-china.org/org/")
+        ("gnu-cn" . "http://elpa.emacs-china.org/gnu/")))
 
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    ;; (setq url-proxy-services                                                      ;;
@@ -342,7 +355,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  (load (expand-file-name "proxy.el" dotspacemacs-directory) 'no-error 'no-message)
+  ;; (load (expand-file-name "proxy.el" dotspacemacs-directory) 'no-error 'no-message)
 
   ;; https://github.com/syl20bnr/spacemacs/issues/2705
   ;; (setq tramp-mode nil)
@@ -355,10 +368,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; hack for remove purpose mode
   (setq purpose-mode nil)
 
-  (setq debug-on-error t)
+  ;; (setq debug-on-error t)
 
-
- )
+)
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -397,6 +409,16 @@ you should place your code here."
 
 )
 
+(defun get-hostname ()
+  "Reliable way to get current hostname.
+    `(getenv \"HOSTNAME\")' won't work because $HOSTNAME is NOT an
+    environment variable.
+    `system-name' won't work because /etc/hosts could be modified"
+  (with-temp-buffer
+    (shell-command "hostname" t)
+    (goto-char (point-max))
+    (delete-char -1)
+    (buffer-string)))
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
