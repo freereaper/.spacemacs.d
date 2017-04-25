@@ -23,6 +23,3 @@
 
 (define-key evil-normal-state-map (kbd "zj") 'freereaper/empty-line-below)
 (define-key evil-normal-state-map (kbd "zk") 'freereaper/empty-line-above)
-
-
-;; (define-key evil-motion-state-map (kbd "C-i") 'evil-jump-forward)

@@ -320,7 +320,7 @@ values."
 
   (if (string-match "T450s" (get-hostname))
       (setq-default dotspacemacs-default-font '("Source Code Pro"
-                                                :size 18
+                                                :size 17
                                                 :weight normal
                                                 :width normal
                                                 :powerline-scale 1.1)))
@@ -404,9 +404,13 @@ you should place your code here."
 
   (setq company-idle-delay 0)
 
+
   (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
   (load custom-file 'no-error 'no-message)
 
+  ;; make the background become transparency in the urxvt terminal
+  (if (not (display-graphic-p))
+      (set-face-attribute 'default nil :background "unspecified-bg"))
 )
 
 (defun get-hostname ()

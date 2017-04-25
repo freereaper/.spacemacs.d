@@ -11,4 +11,4 @@
 (spacemacs/set-leader-keys "nl" 'spacemacs/evil-search-clear-highlight)
 
 ;; make C-i consistent
-(define-key evil-normal-state-map (kbd "TAB") 'evil-jump-forward)
+;; (define-key evil-normal-state-map (kbd "C-i") 'evil-jump-forward)
