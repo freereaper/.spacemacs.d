@@ -1,6 +1,9 @@
 (defconst freereaper-blog-packages '(
                                      prodigy
-                                     org-octopress
+                                     ;; org-octopress
+                                     (blog-admin :location (recipe
+                                                            :fetcher github
+                                                            :repo "codefalling/blog-admin"))
                                      )
   )
 
@@ -41,6 +44,28 @@
       :kill-process-buffer-on-stop t)
 
     ))
+
+(defun freereaper-blog/init-blog-admin ()
+  (use-package blog-admin
+    :defer t
+    :commands blog-admin-start
+    :init
+    (progn
+      (setq blog-admin-backend-type 'hexo
+            blog-admin-backend-path blog-admin-dir
+            blog-admin-backend-new-post-with-same-name-dir nil
+            blog-admin-backend-hexo-config-file "_config.yml"
+            )
+      (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+      (setq blog-admin-backend-hexo-template-org-post ;; post\u6a21\u677f
+            "#+TITLE: %s
+#+DATE: %s
+#+SETUPFILE: ../../org/setupfile.org
+#+LAYOUT: post
+#+TAGS:
+#+CATEGORIES:
+             ")))
+  )
 
 (defun freereaper-blog/init-org-octopress ()
   (use-package org-octopress
