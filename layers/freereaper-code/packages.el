@@ -3,6 +3,7 @@
     etags-select
     ;; (xcscope :location local)
     ;; (helm-cscope :location local)
+    ggtags
     (helm-gtags :location local)
     ;;git clone --depth=1 https://github.com/melpa/melpa.git ~/.emacs.d/.cache/quelpa/melpa
     ;; (counsel-gtags :location :fetcher github
@@ -157,9 +158,44 @@
   )
 
 
+(defun freereaper-code/init-ggtags ()
+  (use-package ggtags
+    :defer t
+    :init
+    (progn
+      ;; modes that do not have a layer, add here.
+      (add-hook 'awk-mode-local-vars-hook #'spacemacs/ggtags-mode-enable)
+      (add-hook 'shell-mode-local-vars-hook #'spacemacs/ggtags-mode-enable)
+      (add-hook 'tcl-mode-local-vars-hook #'spacemacs/ggtags-mode-enable)
+      (add-hook 'vhdl-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
+    :config
+    (when (configuration-layer/package-used-p 'helm-gtags)
+      ;; If anyone uses helm-gtags, they would want to use these key bindings.
+      ;; These are bound in `ggtags-mode-map', since the functionality of
+      ;; `helm-gtags-mode' is basically entirely contained within
+      ;; `ggtags-mode-map' --- this way we don't have to enable both.
+      ;; Note: all of these functions are autoloadable.
+      (define-key ggtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+      (define-key ggtags-mode-map (kbd "C-x 4 .") 'helm-gtags-find-tag-other-window)
+      (define-key ggtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+      (define-key ggtags-mode-map (kbd "M-*") 'helm-gtags-pop-stack))))
+
 (defun freereaper-code/init-helm-gtags ()
-  (use-package helm-gtags)
-  )
+  (use-package helm-gtags
+    :init
+    (progn
+      (setq helm-gtags-ignore-case t
+            helm-gtags-auto-update t
+            helm-gtags-use-input-at-cursor t
+            helm-gtags-pulse-at-cursor t)
+      ;; modes that do not have a layer, define here
+      (spacemacs/helm-gtags-define-keys-for-mode 'tcl-mode)
+      (spacemacs/helm-gtags-define-keys-for-mode 'vhdl-mode)
+      (spacemacs/helm-gtags-define-keys-for-mode 'awk-mode)
+      (spacemacs/helm-gtags-define-keys-for-mode 'dired-mode)
+      (spacemacs/helm-gtags-define-keys-for-mode 'compilation-mode)
+      (spacemacs/helm-gtags-define-keys-for-mode 'shell-mode))))
+
 
 (defun freereaper-code/post-init-helm-gtags ()
 
