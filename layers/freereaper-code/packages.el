@@ -3,12 +3,16 @@
     etags-select
     ;; (xcscope :location local)
     ;; (helm-cscope :location local)
-    helm-gtags
+    (helm-gtags :location local)
+    ;;git clone --depth=1 https://github.com/melpa/melpa.git ~/.emacs.d/.cache/quelpa/melpa
+    ;; (counsel-gtags :location :fetcher github
+    ;;                                  :repo "freereaper/emacs-counsel-gtags"
+    ;;                                  ))
+    (counsel-gtags :location local)
     (find-and-ctags :location local)
     ycmd
     dumb-jump
-    flycheck
-      )
+    flycheck)
   )
 
 
@@ -65,6 +69,21 @@
 (defun freereaper-code/init-find-and-ctags ()
   (use-package find-and-ctags)
 
+  )
+
+(defun freereaper-code/init-counsel-gtags ()
+  (use-package counsel-gtags
+    ;; :config
+    ;; (progn
+    ;;   (eval-after-load 'general
+    ;;     (progn
+    ;;       (general-define-key :states   'normal
+    ;;                           :prefix ","
+    ;;                           "ft" 'counsel-gtags-dwim
+    ;;                           "fr" 'counsel-gtags-find-symbol
+    ;;                           "fu" 'counsel-gtags-update-tags
+    ;;        ))))
+    )
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -135,6 +154,11 @@
 
   (bind-key* "M-g j" 'my-dumb-jump)
   (bind-key* "M-g o" 'dumb-jump-go-other-window)
+  )
+
+
+(defun freereaper-code/init-helm-gtags ()
+  (use-package helm-gtags)
   )
 
 (defun freereaper-code/post-init-helm-gtags ()

@@ -45,7 +45,7 @@ values."
      graphviz
      (vinegar :variables vinegar-reuse-dired-buffer t)
      (spacemacs-layouts :variables layouts-enable-autosave nil
-                       layouts-autosave-delay 300)
+                        layouts-autosave-delay 300)
      (git :variables
           git-magit-status-fullscreen t
           magit-push-always-verify nil
@@ -60,11 +60,10 @@ values."
      (spell-checking :variables spell-checking-enable-by-default nil)
      (syntax-checking :variables syntax-checking-enable-by-default nil
                       syntax-checking-enable-tooltips nil)
-     (gtags :disabled-for clojure emacs-lisp javascript latex python shell-scripts)
+     ;; (gtags :disabled-for clojure emacs-lisp javascript latex python shell-scripts)
      (shell :variables shell-default-shell 'eshell)
      c-c++
      emacs-lisp
-     gtags
      markdown
      org
      yaml
@@ -86,12 +85,24 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(smartparens ivy-purpose helm-purpose org-projectile
-                                                org-repo-todo org-download org-timer
-                                                ace-jump-mode org-present fancy-battery
-                                                flx-ido counsel-projectile helm-make evil-lisp-state
-                                                spacemacs-purpose-popwin
-                                                )
+   dotspacemacs-excluded-packages
+   '(magit-gh-pulls magit-gitflow org-projectile evil-mc realgud cmake-ide
+                    evil-args evil-ediff evil-exchange evil-unimpaired
+                    evil-indent-plus volatile-highlights smartparens
+                    holy-mode skewer-mode rainbow-delimiters
+                    highlight-indentation vi-tilde-fringe eyebrowse
+                    org-bullets org-repo-todo org-download org-timer
+                    livid-mode git-gutter git-gutter-fringe  evil-escape
+                    leuven-theme gh-md evil-lisp-state spray lorem-ipsum symon
+                    ac-ispell ace-jump-mode auto-complete auto-dictionary
+                    clang-format define-word google-translate disaster epic
+                    fancy-battery org-present orgit orglue spacemacs-theme
+                    helm-flyspell flyspell-correct-helm clean-aindent-mode
+                    helm-c-yasnippet ace-jump-helm-line helm-make magithub
+                    helm-themes helm-swoop helm-spacemacs-help smeargle
+                    ido-vertical-mode flx-ido company-quickhelp counsel-projectile
+                    window-purpose ivy-purpose helm-purpose spacemacs-purpose-popwin
+                    )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -99,7 +110,8 @@ values."
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-only
+   dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -116,7 +128,7 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https nil
+   dotspacemacs-elpa-https t
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 10
    ;; If non nil then spacemacs will check for updates at startup
@@ -167,11 +179,11 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Ubuntu Mono Derivative Powerline"
-                               :size 17
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+   dotspacemacs-default-font '( "Ubuntu Mono Derivative Powerline"
+                                :size 17
+                                :weight normal
+                                :width normal
+                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -194,7 +206,7 @@ values."
    ;; and TAB or <C-m> and RET.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
-   dotspacemacs-distinguish-gui-tab t
+   dotspacemacs-distinguish-gui-tab nil
    ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
    dotspacemacs-remap-Y-to-y$ t
    ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
@@ -202,7 +214,7 @@ values."
    dotspacemacs-retain-visual-state-on-shift t
    ;; If non-nil, J and K move lines up and down when in visual mode.
    ;; (default nil)
-   dotspacemacs-visual-line-move-text nil
+   dotspacemacs-visual-line-move-text t
    ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
    ;; (default nil)
    dotspacemacs-ex-substitute-global nil
@@ -249,6 +261,12 @@ values."
    ;; right; if there is insufficient space it displays it at the bottom.
    ;; (default 'bottom)
    dotspacemacs-which-key-position 'bottom
+   ;; Control where `switch-to-buffer' displays the buffer. If nil,
+   ;; `switch-to-buffer' displays the buffer in the current window even if
+   ;; another same-purpose window is available. If non nil, `switch-to-buffer'
+   ;; displays the buffer in a same-purpose window even if the buffer can be
+   ;; displayed in the current window. (default nil)
+   dotspacemacs-switch-to-buffer-prefers-purpose nil
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
@@ -262,7 +280,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -287,7 +305,7 @@ values."
    dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
-   dotspacemacs-folding-method 'evil
+   dotspacemacs-folding-method 'origami
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -337,17 +355,15 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-(setq configuration-layer--elpa-archives
-      '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-        ("org-cn" . "http://elpa.emacs-china.org/org/")
-        ("gnu-cn" . "http://elpa.emacs-china.org/gnu/")))
+  ;; (setq configuration-layer--elpa-archives
+  ;;     '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+  ;;       ("org-cn" . "http://elpa.emacs-china.org/org/")
+  ;;       ("gnu-cn" . "http://elpa.emacs-china.org/gnu/")))
 
-   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-   ;; (setq url-proxy-services                                                      ;;
-   ;;         '(("no_proxy" . "^\\(localhost\\)")                                   ;;
-   ;;           ("http" . "10.30.24.3:985")                                         ;;
-   ;;           ("https" . "10.30.24.3:985")))                                      ;;
-   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (setq-default configuration-layer--elpa-archives
+   '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+     ("gnu-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+     ("org-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -357,8 +373,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;            ("https" . "192.168.0.105:1080")))                                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-  ;; (load (expand-file-name "proxy.el" dotspacemacs-directory) 'no-error 'no-message)
+  (load (expand-file-name "proxy.el" dotspacemacs-directory) 'no-error 'no-message)
 
   ;; https://github.com/syl20bnr/spacemacs/issues/2705
   ;; (setq tramp-mode nil)
@@ -366,14 +381,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
         "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
 
   (setq exec-path-from-shell-check-startup-files nil)
+  (setq evil-shift-round nil)
   (setq byte-compile-warnings '(not obsolete))
   (setq warning-minimum-level :error)
   ;; hack for remove purpose mode
   (setq purpose-mode nil)
 
-  ;; (setq debug-on-error t)
+  ;; (setq gtags-excluded-packages 'helm-gtags)
 
-)
+  ;; (setq debug-on-error t)
+  )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -408,13 +425,17 @@ you should place your code here."
   (setq company-idle-delay 0)
 
 
-  (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
-  (load custom-file 'no-error 'no-message)
+    ;; emacs just got freeze with savehist-mode enable
+  ;; https://github.com/syl20bnr/spacemacs/issues/9409#issuecomment-323373826
+  ;; (setq history-length 100)
+  ;; (put 'minibuffer-history 'history-length 50)
+  ;; (put 'evil-ex-history 'history-length 50)
+  ;; (put 'kill-ring 'history-length 25)
 
   ;; make the background become transparency in the urxvt terminal
   (if (not (display-graphic-p))
       (set-face-attribute 'default nil :background "unspecified-bg"))
-)
+  )
 
 (defun get-hostname ()
   "Reliable way to get current hostname.
@@ -427,23 +448,12 @@ you should place your code here."
     (delete-char -1)
     (buffer-string)))
 
+(setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+(load custom-file 'no-error 'no-message)
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (monokai-theme zenburn-theme helm-gtags cal-china-x yaml-mode fcitx helm-cscope xcscope rtags flycheck-ycmd company-ycmd ycmd request-deferred deferred auto-dictionary yapfify ranger rainbow-mode rainbow-identifiers pyvenv pytest pyenv-mode py-isort prodigy pip-requirements live-py-mode hy-mode flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck engine-mode cython-mode company-anaconda color-identifiers-mode anaconda-mode pythonic xterm-color ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline powerline smex smeargle shell-pop restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode ibuffer-projectile hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt hexo help-fns+ helm-make helm-github-stars helm-ag helm helm-core graphviz-dot-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh marshal logito pcache ht gh-md ggtags flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s disaster diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy company-statistics company-c-headers company column-enforce-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup quelpa package-build color-theme-sanityinc-tomorrow))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 )

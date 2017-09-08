@@ -23,3 +23,10 @@
 
 (define-key evil-normal-state-map (kbd "zj") 'freereaper/empty-line-below)
 (define-key evil-normal-state-map (kbd "zk") 'freereaper/empty-line-above)
+
+(nvmap :prefix ","
+       "+"  'spacemacs/scale-up-font
+       "-"  'spacemacs/scale-down-font
+       "aa" 'copy-to-x-clipboard
+       "zz" 'paste-from-x-clipboard
+       )
